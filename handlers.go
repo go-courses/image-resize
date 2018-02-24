@@ -2,15 +2,18 @@ package main
 
 import (
   "fmt"
+  "github.com/unrolled/render"
   "net/http"
 )
 
+var rend = render.New()
+
 func Index(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("I'm working!")
+  http.Redirect(w, r, "/images", 302)
 }
 
 func Images(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("We'll upload images from here!")
+  rend.HTML(w, http.StatusOK, "index", "")
 }
 
 func UploadImage(w http.ResponseWriter, r *http.Request) {

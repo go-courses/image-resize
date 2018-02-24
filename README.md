@@ -15,3 +15,5 @@ This app is to resize images
 ## Start app
 
 `./image-resize`
+
+## Enjoy image resizing at `localhost:8080`

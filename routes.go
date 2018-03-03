@@ -15,13 +15,13 @@ var routes = Routes{
 	Route{
 		"Show the Form",
 		"GET",
-		"/images",
+		"/",
 		Images,
 	},
 	Route{
 		"Upload Image",
 		"POST",
-		"/images",
-		UploadImage,
+		"/upload",
+		Upload,
 	},
 }

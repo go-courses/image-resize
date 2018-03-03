@@ -8,12 +8,15 @@
 </div>
 
 <div class="container">
-  <form class="form">
+  <form class="form" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
     <div class="form-group">
-      <label for="exampleInputFile">Your Image</label>
-      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+      <label for="exampleInputFile">Upload Your Image</label>
+      <input type="file" class="form-control-file" name="uploadfile" />
     </div>
-    <button type="submit" class="btn btn-outline-success mb-2">Upload</button>
+    <input type="hidden" name="token" value="{{.}}"/>
+    <input class="btn btn-outline-success mb-2" type="submit" value="upload" />
   </form>
+
+
 </div>
 

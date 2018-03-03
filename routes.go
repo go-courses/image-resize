@@ -13,13 +13,13 @@ type Routes []Route
 
 var routes = Routes{
 	Route{
-		"Images",
+		"Show the Form",
 		"GET",
 		"/images",
 		Images,
 	},
 	Route{
-		"Images",
+		"Upload Image",
 		"POST",
 		"/images",
 		UploadImage,

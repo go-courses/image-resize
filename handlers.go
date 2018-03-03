@@ -35,7 +35,12 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			return
 		}
+
+		filepath := handler.Filename
+
 		defer f.Close()
 		io.Copy(f, file)
+
+		Resize(filepath)
 	}
 }

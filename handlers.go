@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"io"
-	"net/http"
 	"os"
-
+	"io"
+	"fmt"
+	"net/http"
 	"github.com/unrolled/render"
 )
 

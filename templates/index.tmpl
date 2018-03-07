@@ -11,7 +11,7 @@
   <form class="form" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
     <div class="form-group">
       <label for="exampleInputFile">Upload Your Image</label>
-      <input type="file" class="form-control-file" name="uploadfile" />
+      <input required type="file" class="form-control-file" name="uploadfile" />
     </div>
     <input type="hidden" name="token" value="{{.}}"/>
     <input class="btn btn-outline-success mb-2" type="submit" value="upload" />

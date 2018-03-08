@@ -1,11 +1,12 @@
 package main
 
 import (
-	"image/jpeg"
-	"image/png"
-	"log"
 	"os"
+	"log"
 	"strings"
+	"image/png"
+	"image/gif"
+	"image/jpeg"
 
 	"github.com/nfnt/resize"
 )
@@ -66,8 +67,31 @@ func Resize(filepath string) {
 
 		// write new image to file
 		png.Encode(out, m)
+
+	} else if strings.HasSuffix(filepath, ".gif") {
+		file, err := os.Open(filepath)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// decode gif into image.Image
+		img, err := gif.Decode(file)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		// resize to width 1000 using Lanczos resampling
+		// and preserve aspect ratio
+		m := resize.Resize(1000, 0, img, resize.Lanczos3)
+		newname := filepath[:len(filepath) - 4] + "_resized.gif"
+		out, err := os.Create(newname)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer out.Close()
+
+		// write new image to file
+		gif.Encode(out, m, nil)
 	}
-
-
-	
 }

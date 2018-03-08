@@ -29,12 +29,6 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			return
 		}
-		imageStatus, err := ChekFile(handler.Filename, w)
-		if err != nil {
-			return
-		} else {
-			fmt.Fprintf(w, "%v %v", imageStatus, "Ваш файл прошёл проверку и успешно загружен!")
-		}
 		defer file.Close()
 		f, err := os.OpenFile("./"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
@@ -42,12 +36,16 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		filepath := handler.Filename
+		imageStatus, err := ChekFile(handler.Filename, w)
+		if err != nil {
+			return
+		}
+		fmt.Fprintf(w, "%v %v", imageStatus, "Ваш файл прошёл проверку и успешно загружен!")
 
 		defer f.Close()
 		io.Copy(f, file)
 
-		Resize(filepath)
+		Resize(handler.Filename)
 	}
 }
 
@@ -57,7 +55,7 @@ func ChekFile(fileName string, w http.ResponseWriter) (bool, error) {
 		return false, err
 	}
 	kind, err := filetype.Match(file)
-	if err != nil && filetype.IsImage(file) {
+	if (kind.MIME.Value == "image/png" || kind.MIME.Value == "image/jpeg" || kind.MIME.Value == "image/gif") && err != nil && filetype.IsImage(file) {
 		fmt.Fprintf(w, "%v", "Ваш файл это не изображение! Попробуйте снова!")
 		return false, err
 	}

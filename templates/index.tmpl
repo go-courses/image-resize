@@ -22,7 +22,7 @@
 <script type="text/javascript">
   function chekFile(val){
     var v = val.value;
-    var v = v.search(/^.*\.(?:jpg|jpeg|png)\s*$/ig) //Проверяем расширение файла
+    var v = v.search(/^.*\.(?:jpg|jpeg|png|gif)\s*$/ig) //Проверяем расширение файла
     var input, file;
     if (!window.FileReader) {
       bodyAppend("p", "The file API isn't supported on this browser yet."); //Проверяем работает ли наш метод в этом браузере

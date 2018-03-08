@@ -5,7 +5,9 @@ import (
 	"io"
 	"fmt"
 	"net/http"
+	"io/ioutil"
 	"github.com/unrolled/render"
+	"gopkg.in/h2non/filetype.v1"
 )
 
 var rend = render.New()
@@ -27,8 +29,13 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			return
 		}
+		imageStatus, err := ChekFile(handler.Filename, w)
+		if err != nil {
+			return
+		} else {
+			fmt.Fprintf(w, "%v %v", imageStatus, "Ваш файл прошёл проверку и успешно загружен!")
+		}
 		defer file.Close()
-		fmt.Fprintf(w, "%v", "Ваш файл был успешно загружен!")
 		f, err := os.OpenFile("./"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
@@ -42,4 +49,18 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 
 		Resize(filepath)
 	}
+}
+
+func ChekFile(fileName string, w http.ResponseWriter) (bool, error) {
+	file, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return false, err
+	}
+	kind, err := filetype.Match(file)
+	if err != nil && filetype.IsImage(file) {
+		fmt.Fprintf(w, "%v", "Ваш файл это не изображение! Попробуйте снова!")
+		return false, err
+	}
+	fmt.Printf("File type: %s. MIME: %s. IsImage: %v\n", kind.Extension, kind.MIME.Value, filetype.IsImage(file))
+	return true, nil
 }

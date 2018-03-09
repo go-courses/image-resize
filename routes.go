@@ -2,6 +2,7 @@ package main
 
 import "net/http"
 
+// Route there we define it
 type Route struct {
 	Name        string
 	Method      string
@@ -9,19 +10,33 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+// Routes this is a struct
 type Routes []Route
 
 var routes = Routes{
 	Route{
-		"Show the Form",
+		"Index",
 		"GET",
 		"/",
+		Index,
+	},
+
+	Route{
+		"Images",
+		"GET",
+		"/images",
 		Images,
 	},
 	Route{
-		"Upload Image",
+		"Images",
 		"POST",
-		"/upload",
-		Upload,
+		"/images",
+		UploadImage,
+	},
+	Route{
+		"imageShow",
+		"GET",
+		"/images/{imageId}",
+		ResizeImage,
 	},
 }

@@ -71,6 +71,7 @@ paths:
             $ref: "#/definitions/Image"
         400:
           description: "Invalid Image Id"
+
 definitions:
   Image:
     type: "object"

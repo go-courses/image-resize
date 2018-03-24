@@ -1,0 +1,72 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a Image Resize server."
+  version: "1.0.0"
+  title: "Image Resize"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "fedorenko.tolik@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/"
+tags:
+- name: "image"
+  description: "Resize your images"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /images:
+    get:
+      tags:
+      - "image"
+      summary: "Shows the form"
+      description: "Form for image upload"
+      operationId: "imageFormShow"
+      produces:
+      - "text/html"
+      parameters: []
+      responses:
+        200:
+          description: "success"
+    post:
+      summary: "Uploads a file."
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "uploadfile"
+        in: "formData"
+        description: "The file to upload."
+        required: false
+        type: "file"
+        x-exportParamName: "Uploadfile"
+      responses:
+        200:
+          description: "success"
+  /images/{imageId}:
+    get:
+      tags:
+      - "image"
+      summary: "Shows the image"
+      description: ""
+      operationId: "imageShow"
+      produces:
+      - "text/html"
+      parameters:
+      - name: "imageId"
+        in: "path"
+        description: "Image Id to show image"
+        required: true
+        type: "string"
+        x-exportParamName: "ImageId"
+      responses:
+        200:
+          description: "success"
+        400:
+          description: "Invalid Image Id"
+definitions: {}
